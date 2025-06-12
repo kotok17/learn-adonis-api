@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      {{ title || "Your default title" }}
+    </title>
+    <!-- For Google -->
+    <link rel="author" href="https://plus.google.com/+Scoopthemes" />
+    <link rel="publisher" href="https://plus.google.com/+Scoopthemes" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    @if ($slots.meta)
+      {{{ await $slots.meta() }}}
+    @endif
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="public/css/app.css" />
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <aside id="sidebar">
+        <ul class="main-nav">
+          <!-- Your Logo Or Site Name -->
+          <li class="nav-brand">
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="#">- Create Todo</a>
+          </li>
+          <li>
+            <a href="#">- List Todo</a>
+          </li>
+        </ul>
+      </aside>
+      {{{ await $slots.main() }}}
+    </div>
+  </body>
+
+</html>
