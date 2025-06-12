@@ -1,11 +1,11 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
-import { Hash } from '@adonisjs/core/hash'
+// import { Hash } from '@adonisjs/core/hash'
 import jwt from 'jsonwebtoken'
 
 export default class AuthController {
   async register({ request, response }: HttpContext) {
-    const data = request.only(['email', 'password'])
+    const data = request.only(['email', 'password','full_name'])
 
     const user = await User.create(data)
     return response.created(user)
@@ -23,11 +23,23 @@ export default class AuthController {
 
     const token = jwt.sign(
       { userId: user.id },
-      process.env.JWT_SECRET!,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
-    )
+      'supersecretkey123', 
+      { expiresIn: '1d' } 
+    );
 
-    return response.ok({ token })
+    
+
+    // return response.ok({ token })
+    return response.ok({
+      type: 'Bearer',
+      token: token, // atau token.toJSON() kalau butuh expired info
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.full_name,
+      },
+      message: 'Login berhasil',
+    })
   }
 
   async me({ request, response }: HttpContext) {
